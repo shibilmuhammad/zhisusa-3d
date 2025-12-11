@@ -27,6 +27,7 @@ export const SceneOverlayStack = () => {
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       let mostVisibleEntry: IntersectionObserverEntry | null = null;
       let maxRatio = 0;
+      let currentSceneEntry: IntersectionObserverEntry | null = null;
 
       entries.forEach((entry) => {
         // Support both overlay cards (data-scene-key) and mobile sections (id="section-{key}")
@@ -43,6 +44,11 @@ export const SceneOverlayStack = () => {
         const progress = entry.isIntersecting ? entry.intersectionRatio : 0;
         setSectionProgressMap({ [sceneKey]: progress });
 
+        // Track current scene entry if present
+        if (sceneKey === currentScene) {
+          currentSceneEntry = entry;
+        }
+
         // Track the most visible section
         if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
           maxRatio = entry.intersectionRatio;
@@ -50,11 +56,18 @@ export const SceneOverlayStack = () => {
         }
       });
 
-      // Set the most visible section as active
-      if (mostVisibleEntry && maxRatio > 0.1) {
-        let sceneKey = mostVisibleEntry.target.getAttribute("data-scene-key") as SceneKey;
+      // Keep current scene active as long as it's still visible at all
+      const currentRatio = currentSceneEntry ? (currentSceneEntry as any).intersectionRatio : 0;
+      if (currentRatio > 0) {
+        return;
+      }
+
+      // Otherwise, set the most visible section as active
+      if (mostVisibleEntry && maxRatio > 0) {
+        const targetEl = (mostVisibleEntry as any).target as HTMLElement;
+        let sceneKey = targetEl.getAttribute("data-scene-key") as SceneKey;
         if (!sceneKey) {
-          const id = mostVisibleEntry.target.id;
+          const id = targetEl.id;
           if (id && id.startsWith("section-")) {
             sceneKey = id.replace("section-", "") as SceneKey;
           }

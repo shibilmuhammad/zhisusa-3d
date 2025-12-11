@@ -3,11 +3,11 @@ import nodemailer from "nodemailer";
 
 export async function POST(request: NextRequest) {
   try {
-    const { checkIn, checkOut } = await request.json();
+    const { checkIn, checkOut, name, email, phone } = await request.json();
 
-    if (!checkIn || !checkOut) {
+    if (!checkIn || !checkOut || !name || !email || !phone) {
       return NextResponse.json(
-        { error: "Check-in and check-out dates are required" },
+        { error: "Name, email, phone, check-in and check-out are required" },
         { status: 400 }
       );
     }
@@ -63,6 +63,13 @@ export async function POST(request: NextRequest) {
           <h2 style="color: #00f5c8; margin-bottom: 20px;">New Booking Request - ZHISUSA</h2>
           
           <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <h3 style="margin-top: 0; color: #333;">Guest Details</h3>
+            <p style="margin: 10px 0;"><strong>Name:</strong> ${name}</p>
+            <p style="margin: 10px 0;"><strong>Email:</strong> ${email}</p>
+            <p style="margin: 10px 0;"><strong>Phone:</strong> ${phone}</p>
+          </div>
+
+          <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
             <h3 style="margin-top: 0; color: #333;">Booking Details</h3>
             <p style="margin: 10px 0;"><strong>Check-in:</strong> ${checkInDate}</p>
             <p style="margin: 10px 0;"><strong>Check-out:</strong> ${checkOutDate}</p>
@@ -76,6 +83,9 @@ export async function POST(request: NextRequest) {
       `,
       text: `
         New Booking Request - ZHISUSA
+        Name: ${name}
+        Email: ${email}
+        Phone: ${phone}
         
         Check-in: ${checkInDate}
         Check-out: ${checkOutDate}

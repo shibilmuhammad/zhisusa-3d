@@ -42,6 +42,12 @@ export function scrollToSection(sceneKey: SceneKey): void {
   
   // On mobile, scroll to top of section
   if (isMobile) {
+    // For hero, scroll to very top to avoid snap glitches
+    if (sceneKey === "hero") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
     // Calculate scroll position
     const rect = targetElement.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
