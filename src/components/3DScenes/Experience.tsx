@@ -27,7 +27,9 @@ const ExperienceInner = () => {
     gl.shadowMap.type = PCFSoftShadowMap;
     // Use PCFSoft for better performance than PCF
     gl.outputColorSpace = SRGBColorSpace;
-    gl.physicallyCorrectLights = true;
+    gl.useLegacyLights = false;
+
+
   }, [gl]);
 
   // Show cabin model for "hero", "live", "work", "leisure", "booking", "gallery" and "footer" sections
