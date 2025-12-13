@@ -1,8 +1,7 @@
 "use client";
-
 import { useThree } from "@react-three/fiber";
 import { useRef, Suspense, useEffect } from "react";
-import { DirectionalLight, Group, ACESFilmicToneMapping, SRGBColorSpace } from "three";
+import { DirectionalLight, Group, ACESFilmicToneMapping, SRGBColorSpace ,PCFSoftShadowMap } from "three";
 import { OrbitControls, Sky, Environment } from "@react-three/drei";
 
 import { MorphingElement } from "./MorphingElement";
@@ -25,7 +24,8 @@ const ExperienceInner = () => {
     gl.toneMapping = ACESFilmicToneMapping;
     gl.toneMappingExposure = 1.2;
     gl.shadowMap.enabled = true;
-    gl.shadowMap.type = gl.shadowMap.PCFSoftShadowMap; // Use PCFSoft for better performance than PCF
+    gl.shadowMap.type = PCFSoftShadowMap;
+    // Use PCFSoft for better performance than PCF
     gl.outputColorSpace = SRGBColorSpace;
     gl.physicallyCorrectLights = true;
   }, [gl]);
