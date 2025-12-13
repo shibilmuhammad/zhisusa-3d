@@ -103,10 +103,13 @@ const ExperienceInner = () => {
         
         {/* Atmospheric hemisphere for natural outdoor lighting */}
         <hemisphereLight
-          skyColor={showCabin ? "#c8e6ff" : "#ffffff"}
-          groundColor={showCabin ? "#3d4f2f" : "#e8e8e8"}
-          intensity={showCabin ? 1.2 : 0.8}
-        />
+  args={[
+    showCabin ? "#c8e6ff" : "#ffffff",
+    showCabin ? "#3d4f2f" : "#e8e8e8",
+    showCabin ? 1.2 : 0.8
+  ]}
+/>
+
 
         {/* Ultra-smooth fog for atmospheric depth */}
         <fog attach="fog" args={['#1a2a1f', 15, 45]} />
