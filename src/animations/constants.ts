@@ -19,6 +19,7 @@ export interface SceneConfig {
   cameraZoom?: number;
   modelRotation?: Vector3Tuple;
   modelScale?: number;
+  accentColor?: string;
 }
 
 export const sceneSequence: SceneConfig[] = [
