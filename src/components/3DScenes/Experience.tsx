@@ -27,7 +27,7 @@ const ExperienceInner = () => {
     gl.shadowMap.type = PCFSoftShadowMap;
     // Use PCFSoft for better performance than PCF
     gl.outputColorSpace = SRGBColorSpace;
-    gl.useLegacyLights = false;
+
 
 
   }, [gl]);
