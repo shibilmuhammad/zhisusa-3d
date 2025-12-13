@@ -8,10 +8,18 @@ import { Color, Group, Object3D } from "three";
 import { useSectionOpacity } from "@/components/3DScenes/hooks/useSectionOpacity";
 import { useSectionProgress } from "@/components/3DScenes/hooks/useSectionProgress";
 import { ModelAsset } from "@/components/3DScenes/models/ModelAsset";
+import { useExperienceStore } from "@/stores/useExperienceStore";
 
 export const LiveScene = () => {
   const { opacity, visible } = useSectionOpacity("live");
   const sectionProgress = useSectionProgress("live");
+  const progress = useExperienceStore((state) => state.progress);
+  
+  const fill = useMemo(() => new Color("#3d5028"), []);
+  const accent = useMemo(() => new Color("#ff8a50"), []);
+  const villaRef = useRef<Group>(null);
+  const doorRef = useRef<Object3D | null>(null);
+  const lightRef = useRef<Object3D | null>(null);
 
   const accentOpacity = useMemo(() => 0.4 + progress * 0.4, [progress]);
 

@@ -3,7 +3,7 @@
 import { Float } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
-import { Color, Group, Object3D } from "three";
+import { Color, Group, Object3D, Mesh } from "three";
 
 import { useSectionOpacity } from "@/components/3DScenes/hooks/useSectionOpacity";
 import { useSectionProgress } from "@/components/3DScenes/hooks/useSectionProgress";
@@ -18,7 +18,7 @@ export const LeisureScene = () => {
 
   const lakeRef = useRef<Group | null>(null);
   const treesRef = useRef<Group | null>(null);
-  const fireRef = useRef<Object3D | null>(null);
+  const fireRef = useRef<Mesh | null>(null);
 
   useFrame((_, delta) => {
     const eased = Math.pow(sectionProgress, 1.2);
@@ -52,7 +52,8 @@ export const LeisureScene = () => {
         position={[0, -0.3, 0]}
         scale={[1.8, 1.8, 1.8]}
         onReady={(root) => {
-          fireRef.current = root.getObjectByName("Campfire") ?? null;
+          const campfire = root.getObjectByName("Campfire");
+          fireRef.current = (campfire && "isMesh" in campfire) ? campfire as Mesh : null;
           treesRef.current = root.getObjectByName("Trees") as Group | null;
         }}
         fallback={

@@ -26,12 +26,12 @@ const FireEffect = () => {
     <group ref={fireRef} position={[0, 0, 0]}>
       {/* Fire flames - realistic multiple layers for depth, rising from ground */}
       {[
-        { pos: [0, 0.05, 0], scale: [0.3, 0.4, 0.3], color: "#ff6b00" },
-        { pos: [0.05, 0.15, 0.03], scale: [0.25, 0.35, 0.25], color: "#ff8c42" },
-        { pos: [-0.04, 0.22, -0.02], scale: [0.2, 0.3, 0.2], color: "#ffa64d" },
-        { pos: [0.03, 0.28, 0.04], scale: [0.18, 0.25, 0.18], color: "#ffb366" },
-        { pos: [-0.03, 0.12, 0.02], scale: [0.22, 0.32, 0.22], color: "#ff7a2a" },
-        { pos: [0.04, 0.25, -0.03], scale: [0.19, 0.28, 0.19], color: "#ff9d55" }
+        { pos: [0, 0.05, 0] as [number, number, number], scale: [0.3, 0.4, 0.3] as [number, number, number], color: "#ff6b00" },
+        { pos: [0.05, 0.15, 0.03] as [number, number, number], scale: [0.25, 0.35, 0.25] as [number, number, number], color: "#ff8c42" },
+        { pos: [-0.04, 0.22, -0.02] as [number, number, number], scale: [0.2, 0.3, 0.2] as [number, number, number], color: "#ffa64d" },
+        { pos: [0.03, 0.28, 0.04] as [number, number, number], scale: [0.18, 0.25, 0.18] as [number, number, number], color: "#ffb366" },
+        { pos: [-0.03, 0.12, 0.02] as [number, number, number], scale: [0.22, 0.32, 0.22] as [number, number, number], color: "#ff7a2a" },
+        { pos: [0.04, 0.25, -0.03] as [number, number, number], scale: [0.19, 0.28, 0.19] as [number, number, number], color: "#ff9d55" }
       ].map((flame, i) => (
         <mesh key={`flame-${i}`} position={flame.pos} castShadow>
           <coneGeometry args={[flame.scale[0], flame.scale[1], 16]} />
@@ -178,10 +178,10 @@ export const LeisureActivities = () => {
           
           {/* Thick support posts in water */}
           {[
-            [-0.85, -0.5, -0.3],
-            [0.85, -0.5, -0.3],
-            [-0.85, -0.5, -1.3],
-            [0.85, -0.5, -1.3]
+            [-0.85, -0.5, -0.3] as [number, number, number],
+            [0.85, -0.5, -0.3] as [number, number, number],
+            [-0.85, -0.5, -1.3] as [number, number, number],
+            [0.85, -0.5, -1.3] as [number, number, number]
           ].map((pos, i) => (
             <mesh key={`post-${i}`} position={pos} castShadow receiveShadow>
               <cylinderGeometry args={[0.12, 0.14, 1.2, 24]} />
@@ -316,7 +316,7 @@ export const LeisureActivities = () => {
             <meshStandardMaterial color="#2a4a3a" roughness={0.8} />
           </mesh>
           {/* Chair legs - crossed design */}
-          {[[-0.22, 0.22, 0], [0.22, 0.22, 0], [-0.22, 0.22, -0.4], [0.22, 0.22, -0.4]].map((pos, i) => (
+          {[[-0.22, 0.22, 0] as [number, number, number], [0.22, 0.22, 0] as [number, number, number], [-0.22, 0.22, -0.4] as [number, number, number], [0.22, 0.22, -0.4] as [number, number, number]].map((pos, i) => (
             <mesh key={`leg-${i}`} position={pos} rotation={[0, 0, i < 2 ? Math.PI / 12 : -Math.PI / 12]} castShadow>
               <cylinderGeometry args={[0.015, 0.018, 0.5, 12]} />
               <meshStandardMaterial color="#4a4a4a" roughness={0.5} metalness={0.7} />
@@ -325,14 +325,14 @@ export const LeisureActivities = () => {
         </group>
         
         {/* Natural water plants - cattails */}
-        {[
+        {([
           [-3, 0, 1.2],
           [-3.2, 0, 0.5],
           [-2.8, 0, 1.5],
           [2.8, 0, 1],
           [3, 0, 0.3],
           [2.5, 0, 1.4]
-        ].map((pos, i) => (
+        ] as [number, number, number][]).map((pos, i) => (
           <group key={`cattail-${i}`} position={pos}>
             <mesh position={[0, 0.6, 0]} castShadow receiveShadow>
               <cylinderGeometry args={[0.02, 0.025, 1.2, 12]} />
@@ -355,10 +355,10 @@ export const LeisureActivities = () => {
         
         {/* Realistic water lilies */}
         {[
-          [-1.5, -0.07, -0.8],
-          [1.2, -0.07, -1.2],
-          [-0.5, -0.07, -1.5],
-          [1.8, -0.07, 0.5]
+          [-1.5, -0.07, -0.8] as [number, number, number],
+          [1.2, -0.07, -1.2] as [number, number, number],
+          [-0.5, -0.07, -1.5] as [number, number, number],
+          [1.8, -0.07, 0.5] as [number, number, number]
         ].map((pos, i) => (
           <group key={`lily-${i}`} position={pos}>
             {/* Lily pad - realistic shape */}
@@ -394,10 +394,10 @@ export const LeisureActivities = () => {
         
         {/* Natural rocks around pond edge */}
         {[
-          [-3.5, -0.08, -1],
-          [-3.2, -0.1, 1.8],
-          [3.4, -0.09, 0.5],
-          [2.8, -0.08, -1.5]
+          [-3.5, -0.08, -1] as [number, number, number],
+          [-3.2, -0.1, 1.8] as [number, number, number],
+          [3.4, -0.09, 0.5] as [number, number, number],
+          [2.8, -0.08, -1.5] as [number, number, number]
         ].map((pos, i) => (
           <mesh key={`rock-${i}`} position={pos} rotation={[0, i * 0.8, 0]} castShadow receiveShadow>
             <sphereGeometry args={[0.3 + i * 0.05, 8, 6]} />
@@ -431,14 +431,14 @@ export const LeisureActivities = () => {
         
         {/* Scattered rocks around fire - realistic irregular rocks, natural placement, on ground */}
         {[
-          { pos: [-1.2, 0.06, -0.8], rot: [0.1, 0.3, 0.2], size: 0.12 },
-          { pos: [1.1, 0.06, -0.9], rot: [0.15, -0.2, 0.1], size: 0.14 },
-          { pos: [-0.9, 0.06, 1.0], rot: [0.2, 0.4, -0.15], size: 0.11 },
-          { pos: [1.3, 0.06, 0.7], rot: [-0.1, -0.3, 0.25], size: 0.13 },
-          { pos: [-0.5, 0.06, -1.1], rot: [0.25, 0.1, 0.3], size: 0.10 },
-          { pos: [0.6, 0.06, 1.2], rot: [-0.15, 0.2, -0.2], size: 0.12 },
-          { pos: [-1.4, 0.06, 0.3], rot: [0.3, -0.4, 0.15], size: 0.15 },
-          { pos: [0.8, 0.06, -1.3], rot: [-0.2, 0.25, 0.2], size: 0.11 }
+          { pos: [-1.2, 0.06, -0.8] as [number, number, number], rot: [0.1, 0.3, 0.2] as [number, number, number], size: 0.12 },
+          { pos: [1.1, 0.06, -0.9] as [number, number, number], rot: [0.15, -0.2, 0.1] as [number, number, number], size: 0.14 },
+          { pos: [-0.9, 0.06, 1.0] as [number, number, number], rot: [0.2, 0.4, -0.15] as [number, number, number], size: 0.11 },
+          { pos: [1.3, 0.06, 0.7] as [number, number, number], rot: [-0.1, -0.3, 0.25] as [number, number, number], size: 0.13 },
+          { pos: [-0.5, 0.06, -1.1] as [number, number, number], rot: [0.25, 0.1, 0.3] as [number, number, number], size: 0.10 },
+          { pos: [0.6, 0.06, 1.2] as [number, number, number], rot: [-0.15, 0.2, -0.2] as [number, number, number], size: 0.12 },
+          { pos: [-1.4, 0.06, 0.3] as [number, number, number], rot: [0.3, -0.4, 0.15] as [number, number, number], size: 0.15 },
+          { pos: [0.8, 0.06, -1.3] as [number, number, number], rot: [-0.2, 0.25, 0.2] as [number, number, number], size: 0.11 }
         ].map((rock, i) => (
           <group key={`scattered-rock-${i}`} position={rock.pos} rotation={rock.rot}>
             {/* Main rock - irregular shape */}
@@ -515,9 +515,9 @@ export const LeisureActivities = () => {
           
           {/* Burning logs in fire - realistic wood with bark texture, positioned on ground */}
           {[
-            { pos: [0, 0.2, 0], rot: [0, 0, Math.PI / 6] },
-            { pos: [0.08, 0.18, 0.05], rot: [0, Math.PI / 3, -Math.PI / 8] },
-            { pos: [-0.06, 0.19, -0.04], rot: [0, -Math.PI / 4, Math.PI / 5] }
+            { pos: [0, 0.2, 0] as [number, number, number], rot: [0, 0, Math.PI / 6] as [number, number, number] },
+            { pos: [0.08, 0.18, 0.05] as [number, number, number], rot: [0, Math.PI / 3, -Math.PI / 8] as [number, number, number] },
+            { pos: [-0.06, 0.19, -0.04] as [number, number, number], rot: [0, -Math.PI / 4, Math.PI / 5] as [number, number, number] }
           ].map((log, i) => (
             <group key={`log-${i}`} position={log.pos} rotation={log.rot}>
               {/* Main log body - higher detail */}

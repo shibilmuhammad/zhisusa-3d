@@ -176,7 +176,7 @@ export const Header = () => {
           ref={navContainerRef}
           className="experience-header__nav-container"
           style={{
-            x: containerX,
+            x: containerX as unknown as number,
             '--total-items': sceneSequence.length,
           } as React.CSSProperties & { '--total-items': number }}
         >

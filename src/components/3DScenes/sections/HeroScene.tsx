@@ -9,7 +9,7 @@ import { useFrame } from "@react-three/fiber";
 import { useSectionOpacity } from "@/components/3DScenes/hooks/useSectionOpacity";
 import { useSectionProgress } from "@/components/3DScenes/hooks/useSectionProgress";
 import { ModelAsset } from "@/components/3DScenes/models/ModelAsset";
-import { SceneAssets } from "@/components/3DScenes/models/SceneAssets";
+// import { SceneAssets } from "@/components/3DScenes/models/SceneAssets";
 import { easeInOutQuad, easeOutCubic } from "@/animations/easings";
 
 const DreiText = dynamic(async () => (await import("@react-three/drei")).Text, {
@@ -50,7 +50,7 @@ export const HeroScene = () => {
   return (
     <group visible={visible} name="HeroScene" position={[0, 0, 0]}>
       <group ref={cloudsRef} position={[0, 0.5, 0]}>
-      <SceneAssets variant="heroTree" />
+      {/* <SceneAssets variant="heroTree" /> */}
         {/* {[...Array(6)].map((_, index) => (
           <Float key={`cloud-${index}`} speed={0.4 + index * 0.05} floatIntensity={0.35}>
             <mesh

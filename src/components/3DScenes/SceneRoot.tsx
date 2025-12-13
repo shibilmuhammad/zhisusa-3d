@@ -45,7 +45,7 @@ export const SceneRoot = () => {
     const handleMobileScroll = () => {
       const sections = document.querySelectorAll('.scene-section');
       const viewportCenter = window.innerHeight / 2;
-      let activeSection: HTMLElement | null = null;
+      let activeSection: Element | null = null;
       let minDistance = Infinity;
 
       sections.forEach((section) => {
@@ -55,12 +55,14 @@ export const SceneRoot = () => {
 
         if (distance < minDistance && rect.top < viewportCenter && rect.bottom > viewportCenter) {
           minDistance = distance;
-          activeSection = section as HTMLElement;
+          activeSection = section;
         }
       });
 
       if (activeSection) {
-        const sceneKey = activeSection.id.replace('section-', '') as SceneKey;
+        const sectionElement = activeSection as HTMLElement;
+        if (sectionElement.id) {
+          const sceneKey = sectionElement.id.replace('section-', '') as SceneKey;
         if (sceneKey) {
           setScene(sceneKey);
           
@@ -69,6 +71,7 @@ export const SceneRoot = () => {
           const currentIndex = Array.from(sections).indexOf(activeSection);
           const progress = currentIndex / (totalSections - 1 || 1);
           setProgress(progress);
+        }
         }
       }
     };
@@ -163,7 +166,6 @@ export const SceneRoot = () => {
             toneMappingExposure: 1.2,
             outputColorSpace: SRGBColorSpace,
             preserveDrawingBuffer: false,
-            physicallyCorrectLights: true,
           }}
           style={{ pointerEvents: 'auto' }}
         >

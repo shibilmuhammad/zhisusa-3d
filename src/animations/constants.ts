@@ -20,6 +20,7 @@ export interface SceneConfig {
   modelRotation?: Vector3Tuple;
   modelScale?: number;
   accentColor?: string;
+  backgroundColor?: string;
 }
 
 export const sceneSequence: SceneConfig[] = [
