@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useExperienceStore } from "@/stores/useExperienceStore";
+import { MeshStandardMaterial, MeshPhysicalMaterial } from "three";
 
 export const CheckInKiosk = () => {
   const kioskRef = useRef<THREE.Group>(null);
@@ -26,7 +27,16 @@ export const CheckInKiosk = () => {
     if (ledRef.current) {
       const time = state.clock.elapsedTime;
       const pulse = 0.6 + Math.sin(time * 2) * 0.2;
-      ledRef.current.material.emissiveIntensity = pulse;
+      const material = ledRef.current.material;
+
+      if (
+        !Array.isArray(material) &&
+        (material instanceof MeshStandardMaterial ||
+          material instanceof MeshPhysicalMaterial)
+      ) {
+        material.emissiveIntensity = pulse;
+      }
+
     }
   });
   

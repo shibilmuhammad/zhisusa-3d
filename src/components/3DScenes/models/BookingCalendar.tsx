@@ -4,6 +4,8 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useExperienceStore } from "@/stores/useExperienceStore";
+import { MeshStandardMaterial } from "three";
+
 
 export const BookingCalendar = () => {
   const calendarRef = useRef<THREE.Group>(null);
@@ -384,7 +386,13 @@ const DateTile = ({ position, date, isLeft }: { position: [number, number, numbe
       const pulse = 1 + Math.sin(time * 2) * pulseIntensity;
       glowRef.current.scale.setScalar(pulse);
       const baseOpacity = isSelected ? 0.5 : 0.25;
-      glowRef.current.material.opacity = baseOpacity + Math.sin(time * 2) * 0.1;
+      const material = glowRef.current.material;
+
+      if (!Array.isArray(material) && material instanceof MeshStandardMaterial) {
+        material.transparent = true;
+        material.opacity = baseOpacity + Math.sin(time * 2) * 0.1;
+      }
+      
     }
   });
   
