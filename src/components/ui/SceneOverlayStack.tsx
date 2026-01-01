@@ -1,6 +1,7 @@
 "use client";
 
 import { CSSProperties, useEffect, useRef } from "react";
+import Link from "next/link";
 
 import { sceneSequence, SceneKey } from "@/animations/constants";
 import { useExperienceStore } from "@/stores/useExperienceStore";
@@ -168,6 +169,11 @@ export const SceneOverlayStack = () => {
                 "Plot your path to the retreat — tap the beacon and follow the illuminated trail into the valley."}
             </p>
 
+            {scene.key === "live" && (
+              <Link href="/live" className="overlay-card__cta">
+                Explore Accommodations →
+              </Link>
+            )}
             {scene.key === "booking" && <BookingCard highlight={isActive} />}
             {scene.key === "gallery" && <GalleryCarouselHint active={isActive} />}
           </article>

@@ -1026,6 +1026,57 @@ canvas {
   letter-spacing: 0.01em;
 }
 
+.overlay-card__cta {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 16px 32px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--color-live-primary), var(--color-live-secondary));
+  border: none;
+  border-radius: 12px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 24px var(--color-live-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 2px 16px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.02em;
+}
+
+.overlay-card__cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.overlay-card__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 32px var(--color-live-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 4px 24px rgba(0, 0, 0, 0.8);
+}
+
+.overlay-card__cta:hover::before {
+  left: 100%;
+}
+
+.overlay-card__cta:active {
+  transform: translateY(0);
+}
+
 .booking-card {
   margin-top: 28px;
   padding: 36px;

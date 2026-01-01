@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { PageHeader } from "@/components/ui/PageHeader";
 import "./live.css";
 
 // Stay types data
@@ -115,7 +116,8 @@ const stayDetails = {
 
 export default function LivePage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [selectedStay, setSelectedStay] = useState<string | null>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
+  const [selectedStay, setSelectedStay] = useState<string | null>("cottages"); // Default to cottages
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [guests, setGuests] = useState(2);
@@ -127,6 +129,19 @@ export default function LivePage() {
 
   const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.95]);
+
+  // Handle stay type selection with smooth scroll
+  const handleStaySelect = (stayId: string) => {
+    setSelectedStay(stayId);
+    
+    // Scroll to details section smoothly after a brief delay
+    setTimeout(() => {
+      detailsRef.current?.scrollIntoView({ 
+        behavior: "smooth", 
+        block: "start" 
+      });
+    }, 300);
+  };
 
   // Get tomorrow's date as minimum check-in
   const minDate = new Date();
@@ -173,6 +188,8 @@ export default function LivePage() {
 
   return (
     <div ref={containerRef} className="live-page">
+      <PageHeader currentPage="live" pageTitle="Live at ZHISUSA" />
+      
       {/* Hero Section */}
       <motion.section
         className="live-hero"
@@ -250,6 +267,16 @@ export default function LivePage() {
           <p className="live-types__subtitle">
             Four unique ways to experience ZHISUSA
           </p>
+          {selectedStay && (
+            <motion.p 
+              className="live-types__hint"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              ↓ Scroll down to view details
+            </motion.p>
+          )}
         </motion.div>
 
         <div className="live-types__grid">
@@ -261,8 +288,9 @@ export default function LivePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              onClick={() => setSelectedStay(stay.id)}
+              onClick={() => handleStaySelect(stay.id)}
               whileHover={{ y: -8 }}
+              whileTap={{ scale: 0.98 }}
             >
               <div
                 className="live-type-card__glow"
@@ -294,18 +322,25 @@ export default function LivePage() {
       <AnimatePresence mode="wait">
         {selectedStay && (
           <motion.section
+            ref={detailsRef}
             className="live-details"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, height: 0, y: -20 }}
+            animate={{ opacity: 1, height: "auto", y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -20 }}
+            transition={{ 
+              duration: 0.6,
+              ease: [0.4, 0, 0.2, 1],
+              height: { duration: 0.5 }
+            }}
           >
             <div className="live-details__container">
               <motion.div
                 className="live-details__showcase"
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                key={`showcase-${selectedStay}`}
+                initial={{ opacity: 0, x: -50, scale: 0.95 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -30, scale: 0.95 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
               >
                 <div
                   className="live-details__showcase-card"
@@ -322,9 +357,11 @@ export default function LivePage() {
 
               <motion.div
                 className="live-details__info"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                key={`info-${selectedStay}`}
+                initial={{ opacity: 0, x: 50, scale: 0.95 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 30, scale: 0.95 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
               >
                 <h2 className="live-details__title">
                   {stayTypes.find(s => s.id === selectedStay)?.name}
@@ -384,11 +421,16 @@ export default function LivePage() {
                     {stayDetails[selectedStay as keyof typeof stayDetails].amenities.map(
                       (amenity, index) => (
                         <motion.div
-                          key={index}
+                          key={`${selectedStay}-amenity-${index}`}
                           className="live-details__amenity"
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.4 + index * 0.05 }}
+                          initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          transition={{ 
+                            delay: 0.3 + index * 0.05,
+                            duration: 0.4,
+                            ease: [0.4, 0, 0.2, 1]
+                          }}
+                          whileHover={{ scale: 1.05, y: -2 }}
                         >
                           <span className="live-details__amenity-icon">{amenity.icon}</span>
                           <span className="live-details__amenity-label">{amenity.label}</span>

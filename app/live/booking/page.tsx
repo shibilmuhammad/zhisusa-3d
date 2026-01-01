@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { PageHeader } from "@/components/ui/PageHeader";
 import "./booking.css";
 
 interface BookingData {
@@ -116,6 +117,7 @@ export default function BookingPage() {
 
   return (
     <div className="booking-page">
+      <PageHeader currentPage="live" pageTitle="Complete Your Booking" />
       <div className="booking-page__container">
         <motion.div
           className="booking-page__header"

@@ -14,6 +14,7 @@
   color: var(--text-primary);
   position: relative;
   overflow-x: hidden;
+  padding-top: 100px; /* Space for fixed header */
 }
 
 /* ============================================
@@ -164,6 +165,23 @@
   margin: 0;
 }
 
+.live-types__hint {
+  margin-top: 16px;
+  font-size: 1rem;
+  color: var(--color-live-secondary);
+  font-weight: 500;
+  animation: bounce-hint 2s ease-in-out infinite;
+}
+
+@keyframes bounce-hint {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
 .live-types__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -184,6 +202,7 @@
   cursor: pointer;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
 }
 
 .live-type-card::before {
@@ -208,7 +227,26 @@
 
 .live-type-card.is-selected {
   border-color: var(--color-live-primary);
-  transform: translateY(-8px);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 2px var(--color-live-primary);
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.3),
+      0 0 0 2px var(--color-live-primary),
+      0 0 20px var(--color-live-glow);
+  }
+  50% {
+    box-shadow: 
+      0 16px 48px rgba(0, 0, 0, 0.4),
+      0 0 0 2px var(--color-live-primary),
+      0 0 40px var(--color-live-glow);
+  }
 }
 
 .live-type-card.is-selected::before {
@@ -270,10 +308,12 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
 }
 
 .live-type-card.is-selected .live-type-card__button {
   background: linear-gradient(135deg, var(--color-leisure-primary), var(--color-leisure-secondary));
+  pointer-events: none;
 }
 
 .live-type-card__button:hover {
@@ -293,6 +333,9 @@
     rgba(255, 138, 80, 0.05) 50%,
     transparent 100%
   );
+  overflow: hidden;
+  will-change: height, opacity;
+  scroll-margin-top: 100px;
 }
 
 .live-details__container {
@@ -302,6 +345,7 @@
   grid-template-columns: 1fr 1.5fr;
   gap: 64px;
   align-items: start;
+  will-change: transform, opacity;
 }
 
 .live-details__showcase {
