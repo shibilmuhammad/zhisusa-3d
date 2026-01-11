@@ -1,0 +1,137 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 120px 24px 80px;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    var(--color-deep-navy) 0%,
+    var(--color-darker-navy) 50%,
+    var(--color-midnight-blue) 100%
+  );
+}
+
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at 30% 50%,
+    rgba(0, 245, 200, 0.08) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    circle at 70% 50%,
+    rgba(255, 138, 80, 0.06) 0%,
+    transparent 50%
+  );
+  z-index: 0;
+}
+
+.zLeft,
+.zRight {
+  position: absolute;
+  font-size: 28vw;
+  font-weight: 700;
+  color: var(--color-primary);
+  opacity: 0.1;
+  z-index: 0;
+  pointer-events: none;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.zLeft {
+  left: -8vw;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.zRight {
+  right: -8vw;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.heroContent {
+  max-width: 900px;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  padding: 0 24px;
+}
+
+.title {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 700;
+  margin: 0 0 32px;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-hero-secondary),
+    var(--color-live-primary)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 400;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+.scrollIndicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  z-index: 2;
+}
+
+.scrollIndicator svg {
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 100px 20px 60px;
+  }
+  
+  .zLeft,
+  .zRight {
+    font-size: 35vw;
+    opacity: 0.08;
+  }
+  
+  .zLeft {
+    left: -12vw;
+  }
+  
+  .zRight {
+    right: -12vw;
+  }
+  
+  .scrollIndicator {
+    bottom: 30px;
+  }
+}
+

@@ -1,0 +1,182 @@
+.section {
+  min-height: 100vh;
+  padding: 120px 24px 80px;
+  background: linear-gradient(
+    180deg,
+    var(--color-deep-navy) 0%,
+    var(--color-darker-navy) 100%
+  );
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin: 0 0 64px;
+  letter-spacing: -0.02em;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  margin-bottom: 64px;
+}
+
+.summaryCard {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 40px;
+}
+
+.cardTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 32px;
+  letter-spacing: 0.1em;
+  padding-bottom: 16px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.value {
+  font-size: 1rem;
+  color: var(--text-primary);
+  text-align: right;
+  font-weight: 500;
+}
+
+.daySummary {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+}
+
+.dayTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 16px;
+}
+
+.activityRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.timeSlot {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.activity {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+.ctaContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ctaButton {
+  padding: 20px 64px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-hero-secondary));
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 24px var(--color-primary-glow);
+  cursor: pointer;
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 32px var(--color-primary-glow);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 100px 20px 60px;
+  }
+  
+  .title {
+    margin-bottom: 48px;
+  }
+  
+  .summaryGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  
+  .summaryCard {
+    padding: 32px 24px;
+  }
+  
+  .infoRow,
+  .activityRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .value,
+  .activity {
+    text-align: left;
+  }
+  
+  .ctaButton {
+    width: 100%;
+    padding: 18px 32px;
+    text-align: center;
+  }
+}
+

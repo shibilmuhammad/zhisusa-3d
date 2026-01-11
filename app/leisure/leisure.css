@@ -1,0 +1,868 @@
+/* ============================================
+   LEISURE PAGE STYLES
+   Premium, calm, cinematic design matching ZHISUSA brand
+   ============================================ */
+
+.leisure-page {
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    var(--color-deep-navy) 0%,
+    var(--color-darker-navy) 50%,
+    var(--color-midnight-blue) 100%
+  );
+  color: var(--text-primary);
+  position: relative;
+  overflow-x: hidden;
+  padding-top: 100px;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.leisure-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 120px 24px 80px;
+  overflow: hidden;
+}
+
+.leisure-hero__content {
+  max-width: 900px;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+.leisure-hero__title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  margin: 0 0 24px;
+  background: linear-gradient(
+    135deg,
+    var(--color-leisure-primary),
+    var(--color-leisure-secondary),
+    var(--color-hero-primary)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.leisure-hero__tagline {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 500;
+  margin: 0 0 32px;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.leisure-hero__description {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.7;
+  color: var(--text-tertiary);
+  max-width: 700px;
+  margin: 0 auto 48px;
+}
+
+.leisure-hero__cta {
+  padding: 18px 48px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--color-leisure-primary), var(--color-leisure-secondary));
+  border: none;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 24px var(--color-leisure-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.leisure-hero__cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.leisure-hero__cta:hover::before {
+  left: 100%;
+}
+
+.leisure-hero__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 32px var(--color-leisure-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Animated Background Elements */
+.leisure-hero__bg-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.leisure-hero__particle {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    var(--color-leisure-glow),
+    transparent 70%
+  );
+  filter: blur(40px);
+}
+
+/* ============================================
+   SECTION HEADERS
+   ============================================ */
+
+.leisure-section__header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.leisure-section__title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin: 0 0 16px;
+  background: linear-gradient(135deg, var(--color-hero-primary), var(--color-leisure-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.leisure-section__subtitle {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+/* ============================================
+   ACTIVITIES SECTIONS
+   ============================================ */
+
+.leisure-sports,
+.leisure-adventure,
+.leisure-mindful {
+  padding: 120px 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.leisure-activities__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+}
+
+/* ============================================
+   ACTIVITY CARDS
+   ============================================ */
+
+.leisure-activity-card {
+  position: relative;
+  background: var(--glass-dark);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-light);
+  border-radius: 24px;
+  padding: 40px 32px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.leisure-activity-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.leisure-activity-card:hover::before {
+  opacity: 1;
+}
+
+.leisure-activity-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.leisure-activity-card--mindful {
+  border-color: rgba(61, 213, 152, 0.3);
+}
+
+.leisure-activity-card--mindful:hover {
+  border-color: var(--color-leisure-primary);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px var(--color-leisure-primary),
+    0 0 20px var(--color-leisure-glow);
+}
+
+.leisure-activity-card__glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  opacity: 0;
+  filter: blur(60px);
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.leisure-activity-card:hover .leisure-activity-card__glow {
+  opacity: 0.3;
+}
+
+.leisure-activity-card__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.leisure-activity-card__icon {
+  font-size: 4rem;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.leisure-activity-card__name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: var(--text-primary);
+}
+
+.leisure-activity-card__description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-tertiary);
+  margin: 0 0 24px;
+}
+
+.leisure-activity-card__meta {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.leisure-activity-card__badge {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   BOOKING FORM SECTION
+   ============================================ */
+
+.leisure-booking {
+  padding: 120px 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(61, 213, 152, 0.05) 50%,
+    transparent 100%
+  );
+}
+
+.leisure-booking__form-container {
+  background: var(--glass-dark);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-light);
+  border-radius: 24px;
+  padding: 48px;
+}
+
+.leisure-booking__form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.leisure-booking__field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.leisure-booking__field label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.leisure-booking__field input[type="date"] {
+  padding: 16px 20px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-light);
+  border-radius: 12px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.leisure-booking__field input[type="date"]:focus {
+  outline: none;
+  border-color: var(--color-leisure-primary);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 4px var(--color-leisure-glow);
+}
+
+.leisure-booking__counter {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-light);
+  border-radius: 12px;
+}
+
+.leisure-booking__counter button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: var(--color-leisure-primary);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.leisure-booking__counter button:hover:not(:disabled) {
+  background: var(--color-leisure-secondary);
+  transform: scale(1.1);
+}
+
+.leisure-booking__counter button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.leisure-booking__counter span {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 40px;
+  text-align: center;
+}
+
+.leisure-booking__activities {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.leisure-booking__activities > label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.leisure-booking__activity-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-light);
+  border-radius: 16px;
+  position: relative;
+}
+
+.leisure-booking__activity-select select {
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-light);
+  border-radius: 12px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.leisure-booking__activity-select select:focus {
+  outline: none;
+  border-color: var(--color-leisure-primary);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 4px var(--color-leisure-glow);
+}
+
+.leisure-booking__time-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.leisure-booking__time-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.leisure-booking__time-field label {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+}
+
+.leisure-booking__time-field input[type="time"] {
+  padding: 14px 18px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-light);
+  border-radius: 12px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.leisure-booking__time-field input[type="time"]:focus {
+  outline: none;
+  border-color: var(--color-leisure-primary);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 4px var(--color-leisure-glow);
+}
+
+.leisure-booking__time-field input[type="time"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.leisure-booking__remove {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  background: rgba(255, 107, 157, 0.2);
+  border: 1px solid rgba(255, 107, 157, 0.4);
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.leisure-booking__remove:hover {
+  background: rgba(255, 107, 157, 0.3);
+  transform: scale(1.05);
+}
+
+.leisure-booking__add {
+  padding: 16px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  background: rgba(61, 213, 152, 0.1);
+  border: 1px dashed var(--color-leisure-primary);
+  border-radius: 12px;
+  color: var(--color-leisure-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.leisure-booking__add:hover {
+  background: rgba(61, 213, 152, 0.2);
+  border-color: var(--color-leisure-secondary);
+  transform: translateY(-2px);
+}
+
+.leisure-booking__summary {
+  padding: 24px;
+  background: rgba(61, 213, 152, 0.1);
+  border: 1px solid var(--color-leisure-primary);
+  border-radius: 16px;
+}
+
+.leisure-booking__summary h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: var(--text-primary);
+}
+
+.leisure-booking__summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.leisure-booking__summary-item:last-child {
+  border-bottom: none;
+}
+
+.leisure-booking__submit {
+  padding: 20px 48px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--color-leisure-primary), var(--color-leisure-secondary));
+  border: none;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 24px var(--color-leisure-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.leisure-booking__submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 32px var(--color-leisure-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.leisure-booking__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.leisure-page__footer {
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.leisure-page__back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.leisure-page__back-link:hover {
+  color: var(--color-leisure-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   BOOKING CONFIRMATION PAGE
+   ============================================ */
+
+.leisure-booking-confirm {
+  min-height: 100vh;
+  padding: 120px 24px 80px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.leisure-booking-confirm__container {
+  background: var(--glass-dark);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-light);
+  border-radius: 24px;
+  padding: 48px;
+}
+
+.leisure-booking-confirm__title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin: 0 0 48px;
+  background: linear-gradient(135deg, var(--color-leisure-primary), var(--color-leisure-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+}
+
+.leisure-booking-confirm__summary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-light);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.leisure-booking-confirm__summary-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 24px;
+  color: var(--text-primary);
+}
+
+.leisure-booking-confirm__summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.leisure-booking-confirm__summary-item:last-child {
+  border-bottom: none;
+}
+
+.leisure-booking-confirm__summary-label {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.leisure-booking-confirm__summary-value {
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.leisure-booking-confirm__activities {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.leisure-booking-confirm__activity {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.leisure-booking-confirm__activity-name {
+  font-size: 1rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.leisure-booking-confirm__activity-time {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.leisure-booking-confirm__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.leisure-booking-confirm__form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--text-primary);
+}
+
+.leisure-booking-confirm__form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.leisure-booking-confirm__form-field label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.leisure-booking-confirm__form-field input {
+  padding: 16px 20px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-light);
+  border-radius: 12px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.leisure-booking-confirm__form-field input:focus {
+  outline: none;
+  border-color: var(--color-leisure-primary);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 4px var(--color-leisure-glow);
+}
+
+.leisure-booking-confirm__form-field input::placeholder {
+  color: var(--text-muted);
+}
+
+.leisure-booking-confirm__submit {
+  padding: 20px 48px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--color-leisure-primary), var(--color-leisure-secondary));
+  border: none;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 24px var(--color-leisure-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.leisure-booking-confirm__submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 32px var(--color-leisure-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.leisure-booking-confirm__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.leisure-booking-confirm__success {
+  padding: 16px 20px;
+  background: rgba(61, 213, 152, 0.2);
+  border: 1px solid var(--color-leisure-primary);
+  border-radius: 12px;
+  color: var(--color-leisure-secondary);
+  font-weight: 500;
+  text-align: center;
+}
+
+.leisure-booking-confirm__error {
+  padding: 16px 20px;
+  background: rgba(255, 107, 157, 0.2);
+  border: 1px solid rgba(255, 107, 157, 0.4);
+  border-radius: 12px;
+  color: #ff94b8;
+  font-weight: 500;
+  text-align: center;
+}
+
+.leisure-booking-confirm__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+  width: fit-content;
+}
+
+.leisure-booking-confirm__back:hover {
+  color: var(--color-leisure-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .leisure-activities__grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .leisure-hero {
+    padding: 100px 20px 60px;
+  }
+
+  .leisure-sports,
+  .leisure-adventure,
+  .leisure-mindful,
+  .leisure-booking {
+    padding: 80px 20px;
+  }
+
+  .leisure-activities__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .leisure-booking__form-container {
+    padding: 32px 24px;
+  }
+
+  .leisure-booking__time-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .leisure-hero__title {
+    font-size: 2.5rem;
+  }
+
+  .leisure-hero__cta {
+    padding: 16px 32px;
+    font-size: 1rem;
+  }
+
+  .leisure-activity-card {
+    padding: 32px 24px;
+  }
+
+  .leisure-activity-card__icon {
+    font-size: 3rem;
+  }
+}
+

@@ -1,0 +1,343 @@
+/* ============================================
+   WORK BOOKING PAGE STYLES
+   ============================================ */
+
+.work-booking-page {
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    var(--color-deep-navy) 0%,
+    var(--color-darker-navy) 50%,
+    var(--color-midnight-blue) 100%
+  );
+  color: var(--text-primary);
+  padding: 120px 24px 80px;
+}
+
+.work-booking-page__container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.work-booking-page__header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.work-booking-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-bottom: 24px;
+}
+
+.work-booking-page__back:hover {
+  color: var(--color-work-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.work-booking-page__title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin: 0 0 16px;
+  background: linear-gradient(135deg, var(--color-work-primary), var(--color-work-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.work-booking-page__subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+.work-booking-page__content {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Booking Summary */
+.work-booking-summary {
+  position: sticky;
+  top: 120px;
+}
+
+.work-booking-summary__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 24px;
+  color: var(--text-primary);
+}
+
+.work-booking-summary__card {
+  background: var(--glass-dark);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-light);
+  border-radius: 24px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.work-booking-summary__section h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 24px;
+  color: var(--text-primary);
+}
+
+.work-booking-summary__detail {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.work-booking-summary__detail-icon {
+  font-size: 1.75rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 145, 255, 0.1);
+  border-radius: 12px;
+}
+
+.work-booking-summary__detail-label {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  margin: 0 0 4px;
+}
+
+.work-booking-summary__detail-value {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.work-booking-summary__divider {
+  height: 1px;
+  background: var(--glass-light);
+  margin: 24px 0;
+}
+
+.work-booking-summary__pricing {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.work-booking-summary__total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  padding-top: 16px;
+  border-top: 1px solid var(--glass-light);
+}
+
+/* Booking Form */
+.work-booking-form-container {
+  background: var(--glass-dark);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-light);
+  border-radius: 24px;
+  padding: 40px;
+}
+
+.work-booking-form__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 32px;
+  color: var(--text-primary);
+}
+
+.work-booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.work-booking-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.work-booking-form__field label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.work-booking-form__field input {
+  padding: 16px 20px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-light);
+  border-radius: 12px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.work-booking-form__field input::placeholder {
+  color: var(--text-muted);
+}
+
+.work-booking-form__field input:focus {
+  outline: none;
+  border-color: var(--color-work-primary);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 4px var(--color-work-glow);
+}
+
+.work-booking-form__info {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-light);
+  border-radius: 12px;
+}
+
+.work-booking-form__info p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-tertiary);
+}
+
+.work-booking-form__success {
+  padding: 16px 20px;
+  background: rgba(61, 213, 152, 0.1);
+  border: 1px solid var(--color-leisure-primary);
+  border-radius: 12px;
+  color: var(--color-leisure-primary);
+  font-weight: 500;
+  text-align: center;
+}
+
+.work-booking-form__error {
+  padding: 16px 20px;
+  background: rgba(255, 107, 157, 0.1);
+  border: 1px solid var(--color-booking-primary);
+  border-radius: 12px;
+  color: var(--color-booking-primary);
+  font-weight: 500;
+  text-align: center;
+}
+
+.work-booking-form__submit {
+  padding: 20px 48px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--color-work-primary), var(--color-work-secondary));
+  border: none;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 24px var(--color-work-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  margin-top: 8px;
+}
+
+.work-booking-form__submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 32px var(--color-work-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.work-booking-form__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Empty State */
+.work-booking-page__empty {
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.work-booking-page__empty h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: var(--text-primary);
+}
+
+.work-booking-page__empty p {
+  font-size: 1.125rem;
+  color: var(--text-tertiary);
+  margin: 0 0 32px;
+}
+
+.work-booking-page__back-button {
+  display: inline-block;
+  padding: 16px 40px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--color-work-primary), var(--color-work-secondary));
+  border-radius: 12px;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 24px var(--color-work-glow);
+}
+
+.work-booking-page__back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--color-work-glow);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .work-booking-page__content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .work-booking-summary {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .work-booking-page {
+    padding: 100px 20px 60px;
+  }
+
+  .work-booking-form-container {
+    padding: 32px 24px;
+  }
+
+  .work-booking-summary__card {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .work-booking-page__title {
+    font-size: 2rem;
+  }
+
+  .work-booking-form__submit {
+    padding: 18px 32px;
+  }
+}
+
+

@@ -174,6 +174,16 @@ export const SceneOverlayStack = () => {
                 Explore Accommodations →
               </Link>
             )}
+            {scene.key === "work" && (
+              <Link href="/work" className="overlay-card__cta">
+                Explore Workspaces →
+              </Link>
+            )}
+            {scene.key === "leisure" && (
+              <Link href="/leisure" className="overlay-card__cta">
+                Explore Activities →
+              </Link>
+            )}
             {scene.key === "booking" && <BookingCard highlight={isActive} />}
             {scene.key === "gallery" && <GalleryCarouselHint active={isActive} />}
           </article>
