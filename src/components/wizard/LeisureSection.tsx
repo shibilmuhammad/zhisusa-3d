@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import styles from "./LeisureSection.module.css";
 
 const allActivities = [
@@ -18,6 +19,21 @@ const allActivities = [
   "Stargazing",
   "Yoga",
 ];
+
+const activityImages: Record<string, string> = {
+  "Archery": "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=400&h=400&fit=crop&q=80",
+  "Football": "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=400&h=400&fit=crop&q=80",
+  "Kayaking": "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=400&h=400&fit=crop&q=80",
+  "Volleyball": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=400&h=400&fit=crop&q=80",
+  "ATV": "https://images.unsplash.com/photo-1503626778311-5f16f7e5a5d4?w=400&h=400&fit=crop&q=80",
+  "Fishing": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=400&fit=crop&q=80",
+  "Gardening": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=400&fit=crop&q=80",
+  "Kite Flying": "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=400&h=400&fit=crop&q=80",
+  "Meditative Library": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=400&h=400&fit=crop&q=80",
+  "Painting": "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=400&fit=crop&q=80",
+  "Stargazing": "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400&h=400&fit=crop&q=80",
+  "Yoga": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop&q=80",
+};
 
 const timeSlots = ["Morning", "Afternoon", "Evening"];
 
@@ -120,9 +136,34 @@ export const LeisureSection = ({ onContinue }: LeisureSectionProps) => {
                   transition={{ delay: 0.5 }}
                 >
                   <div className={styles.carouselTrack}>
-                    {allActivities.slice(0, 6).map((activity, idx) => (
+                    {allActivities.map((activity, idx) => (
                       <div key={idx} className={styles.carouselItem}>
-                        <div className={styles.activityIcon}>{activity[0]}</div>
+                        <div className={styles.activityImageContainer}>
+                          <Image
+                            src={activityImages[activity] || `https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&q=80`}
+                            alt={activity}
+                            fill
+                            className={styles.activityImage}
+                            sizes="(max-width: 768px) 120px, 140px"
+                            style={{ objectFit: "cover" }}
+                          />
+                        </div>
+                        <span className={styles.activityName}>{activity}</span>
+                      </div>
+                    ))}
+                    {/* Duplicate for seamless loop */}
+                    {allActivities.map((activity, idx) => (
+                      <div key={`duplicate-${idx}`} className={styles.carouselItem}>
+                        <div className={styles.activityImageContainer}>
+                          <Image
+                            src={activityImages[activity] || `https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&q=80`}
+                            alt={activity}
+                            fill
+                            className={styles.activityImage}
+                            sizes="(max-width: 768px) 120px, 140px"
+                            style={{ objectFit: "cover" }}
+                          />
+                        </div>
                         <span className={styles.activityName}>{activity}</span>
                       </div>
                     ))}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import styles from "./LiveSection.module.css";
 
 const accommodations = [
@@ -9,25 +10,29 @@ const accommodations = [
     id: "villa",
     name: "Private Villa",
     description: "Luxurious standalone villa with lake views and private deck",
-    image: "/images/villa.jpg",
+    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&h=600&fit=crop&q=80",
+    fallbackImage: "/images/villa.jpg",
   },
   {
     id: "cottage",
     name: "Cottage",
     description: "Charming cottage nestled in nature with cozy interiors",
-    image: "/images/cottage.jpg",
+    image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&h=600&fit=crop&q=80",
+    fallbackImage: "/images/cottage.jpg",
   },
   {
     id: "tent",
     name: "Tent",
     description: "Eco-luxury tent experience under the stars",
-    image: "/images/tent.jpg",
+    image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&h=600&fit=crop&q=80",
+    fallbackImage: "/images/tent.jpg",
   },
   {
     id: "treehouse",
     name: "Tree House",
     description: "Elevated retreat among the trees with panoramic views",
-    image: "/images/treehouse.jpg",
+    image: "https://images.unsplash.com/photo-1517164850305-99a3e65bb47e?w=800&h=600&fit=crop&q=80",
+    fallbackImage: "/images/treehouse.jpg",
   },
 ];
 
@@ -82,7 +87,22 @@ export const LiveSection = ({ onContinue }: LiveSectionProps) => {
               onClick={() => setSelectedAccommodation(acc.id)}
             >
               <div className={styles.cardImage}>
-                <div className={styles.imagePlaceholder} />
+                <Image
+                  src={acc.image}
+                  alt={acc.name}
+                  fill
+                  className={styles.image}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  style={{ objectFit: "cover" }}
+                  onError={(e) => {
+                    // Fallback to gradient if image doesn't exist
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    if (target.parentElement) {
+                      target.parentElement.classList.add(styles.imageFallback);
+                    }
+                  }}
+                />
               </div>
               <h3 className={styles.cardTitle}>{acc.name}</h3>
               <p className={styles.cardDescription}>{acc.description}</p>
