@@ -1,11 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { WizardHeader } from "@/components/wizard/WizardHeader";
 import styles from "./checkout.module.css";
 
 export default function WizardCheckoutPage() {
   return (
     <main className={styles.checkoutPage}>
+      <WizardHeader />
       <div className={styles.container}>
         <motion.h1
           className={styles.title}

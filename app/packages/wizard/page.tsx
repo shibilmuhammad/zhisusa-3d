@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { WizardHeader } from "@/components/wizard/WizardHeader";
 import { WizardHero } from "@/components/wizard/Hero";
 import { ProgressNav } from "@/components/wizard/ProgressNav";
 import { LiveSection } from "@/components/wizard/LiveSection";
@@ -40,6 +41,7 @@ export default function PackageWizardPage() {
 
   return (
     <main className={styles.wizardPage}>
+      <WizardHeader />
       <WizardHero />
       <ProgressNav />
       <LiveSection onContinue={handleLiveContinue} />
