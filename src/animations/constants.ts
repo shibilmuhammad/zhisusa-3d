@@ -27,10 +27,9 @@ export const sceneSequence: SceneConfig[] = [
   {
     key: "hero",
     label: "Welcome",
-    // Very zoomed out to show entire frame initially
-    cameraPosition: [0, 8, 25],
-    cameraTarget: [0, 1.5, 0],
-    cameraFov: 60,
+    cameraPosition: [11.21, 28.81, 28.29],
+    cameraTarget: [23.00, 21.80, -25.00],
+    cameraFov: 12.300,
     lightColor: "#88c9ff",
     fogColor: "#0a1a2f",
     fogNear: 10,
@@ -42,18 +41,9 @@ export const sceneSequence: SceneConfig[] = [
   {
     key: "live",
     label: "Live",
-    // Focus on house - camera positioned to show house clearly, shifted to show house more on right side
-    // Work plot is at [-5, 0, -3] (left side, behind house)
-    // Fire is at [3, -0.1, 1.8] (right side, front) - opposite sides
-    // House is at [0, 0, 0] (center), front faces positive Z direction
-    // Rotate house to left (negative Y rotation) so front faces viewport
-    // Camera positioned to focus on house center, excluding work plot and fire from view
-    cameraPosition: [-6, 3, 5],
-    cameraTarget: [-0.5, 1.5, 0],
-    cameraFov: 55,
-    cameraZoom: 1,
-    modelRotation: [0, -Math.PI * 0.3, 0],
-    modelScale: 0.8,
+    cameraPosition: [16.63, 30.18, 4.90],
+    cameraTarget: [23.00, 21.80, -25.00],
+    cameraFov: 12.300,
     lightColor: "#ffe0b2",
     fogColor: "#13233a",
     fogNear: 15,
@@ -65,17 +55,9 @@ export const sceneSequence: SceneConfig[] = [
   {
     key: "work",
     label: "Work",
-    // Show table and laptop - OutdoorWorkspace at [-5, 0, -3] (left side, behind house)
-    // Fire is at [3, -0.1, 1.8] (right side, front) - opposite sides of house
-    // Table is at [0, 0.15, 0] relative to workspace, laptop at [0, 1, 0] relative to table
-    // Absolute position: [-5, 0, -3] + [0, 0.15, 0] + [0, 1, 0] = [-5, 1.15, -3]
-    // Camera positioned further back and shifted to show more on right side (left side reserved for text overlay)
-    cameraPosition: [-9, 1.6, 0.5],
-    cameraTarget: [-5.5, 1.15, -3],
-    cameraFov: 65,
-    cameraZoom: 1,
-    modelRotation: [0, Math.PI * 0.35, 0],
-    modelScale: 0.8,
+    cameraPosition: [52.22, 26.46, -7.64],
+    cameraTarget: [52.10, 25.10, -11.70],
+    cameraFov: 10.000,
     lightColor: "#cbd8ff",
     fogColor: "#0f1a28",
     fogNear: 8,
@@ -87,11 +69,9 @@ export const sceneSequence: SceneConfig[] = [
   {
     key: "leisure",
     label: "Leisure",
-    // Show campfire - campfire is at [3, -0.1, 1.8] (right side of house at [0, 0, 0]) with fire at [0, 0.58, 0] relative
-    // Camera positioned to show more on right side (left side reserved for text overlay)
-    cameraPosition: [2.5, 0.9, 3.5],
-    cameraTarget: [3, 0.48, 1.8],
-    cameraFov: 60,
+    cameraPosition: [142.61, 54.35, -88.66],
+    cameraTarget: [52.10, 4.80, -113.20],
+    cameraFov: 10.000,
     lightColor: "#ffd9a6",
     fogColor: "#182226",
     fogNear: 11,
@@ -103,8 +83,9 @@ export const sceneSequence: SceneConfig[] = [
   {
     key: "booking",
     label: "Booking",
-    cameraPosition: [0, 2.1, 6.5],
-    cameraTarget: [0, 1.4, 0],
+    cameraPosition: [50.98, 10.82, -59.10],
+    cameraTarget: [52.10, 4.80, -113.20],
+    cameraFov: 10.000,
     lightColor: "#b5f5ff",
     fogColor: "#11202c",
     fogNear: 12,
@@ -116,8 +97,9 @@ export const sceneSequence: SceneConfig[] = [
   {
     key: "gallery",
     label: "Gallery",
-    cameraPosition: [-1.6, 2.9, 8.4],
-    cameraTarget: [-0.2, 1.5, 0],
+    cameraPosition: [53.32, 12.49, -169.98],
+    cameraTarget: [52.10, 4.80, -113.20],
+    cameraFov: 10.000,
     lightColor: "#a8c8ff",
     fogColor: "#101c2a",
     fogNear: 9,
@@ -129,10 +111,9 @@ export const sceneSequence: SceneConfig[] = [
   {
     key: "footer",
     label: "Visit",
-    // Zoomed out view to show everything
-    cameraPosition: [0, 8, 20],
-    cameraTarget: [0, 1.5, 0],
-    cameraFov: 70,
+    cameraPosition: [95.30, 13.66, -222.13],
+    cameraTarget: [52.10, 4.80, -113.20],
+    cameraFov: 10.000,
     lightColor: "#9fe8ff",
     fogColor: "#091323",
     fogNear: 12,

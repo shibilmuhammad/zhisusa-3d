@@ -4,10 +4,11 @@ import { useRef, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { Group, Vector3, Euler } from "three";
+import { useControls } from "leva";
 import { useExperienceStore } from "@/stores/useExperienceStore";
 import { sceneSequence } from "@/animations/constants";
 
-const CABIN_MODEL_URL = "/models/cozy_cottage.glb";
+const CABIN_MODEL_URL = "/models/OPTION 20-01-26-compressed.glb";
 
 // Smooth lerp helper
 const lerp = (start: number, end: number, factor: number) => {
@@ -26,11 +27,56 @@ export const AFrameCabin = () => {
   const targetModelRotation = useRef(new Euler());
   const targetFov = useRef(60);
 
+  // Setup Leva UI controls
+  const [{ posX, posY, posZ, targetX, targetY, targetZ, fov }, setControls] = useControls(() => ({
+    posX: { value: 0, min: -500, max: 500, step: 0.01 },
+    posY: { value: 0, min: -500, max: 500, step: 0.01 },
+    posZ: { value: 0, min: -500, max: 500, step: 0.01 },
+    targetX: { value: 0, min: -500, max: 500, step: 0.01 },
+    targetY: { value: 0, min: -500, max: 500, step: 0.01 },
+    targetZ: { value: 0, min: -500, max: 500, step: 0.01 },
+    fov: { value: 60, min: 10, max: 120, step: 0.1 }
+  }), [currentScene]); // Re-create controls when scene changes so values can update
+
   // Load the cozy cottage model
   let cottageScene;
   try {
     const { scene } = useGLTF(CABIN_MODEL_URL);
     cottageScene = scene;
+
+    // Traverse the model to ensure all materials render correctly with their native colors
+    cottageScene.traverse((child) => {
+      // @ts-ignore
+      if (child.isMesh && child.material) {
+        // @ts-ignore
+        const material = child.material;
+
+        // Ensure standard physically-based properties are enforced natively
+        material.needsUpdate = true;
+
+        // Disable environment maps from completely washing out colors
+        if (material.envMapIntensity !== undefined) {
+          material.envMapIntensity = 0.5; // Tone down reflection wash
+        }
+
+        // Specifically fix materials that might appear black/featureless
+        if (material.type === 'MeshStandardMaterial' || material.type === 'MeshPhysicalMaterial') {
+          // If the model was exported without metalness/roughness maps, 
+          // three.js defaults might make it look metallic/dark
+          if (material.metalness === 1 && !material.metalnessMap) {
+            material.metalness = 0.1;
+          }
+          if (material.roughness === 0 && !material.roughnessMap) {
+            material.roughness = 0.8;
+          }
+        }
+
+        // Make sure shadows work correctly
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+
   } catch (error) {
     console.warn("Cozy cottage model not found, using fallback");
   }
@@ -39,12 +85,12 @@ export const AFrameCabin = () => {
   const getAdjustedCameraPosition = (config: typeof sceneSequence[0]): [number, number, number] => {
     const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
     let cameraPosition = [...config.cameraPosition] as [number, number, number];
-    
+
     if (isMobile && config.key === "work") {
       // Move camera more to the left on mobile (more negative X)
       cameraPosition[0] = cameraPosition[0] - 2; // Shift left by 2 units
     }
-    
+
     return cameraPosition;
   };
 
@@ -66,6 +112,15 @@ export const AFrameCabin = () => {
       targetModelRotation.current.set(...activeConfig.modelRotation);
     }
 
+    // Update Leva UI to match current section's config
+    if (activeConfig) {
+      setControls({
+        posX: cameraPosition[0], posY: cameraPosition[1], posZ: cameraPosition[2],
+        targetX: activeConfig.cameraTarget[0], targetY: activeConfig.cameraTarget[1], targetZ: activeConfig.cameraTarget[2],
+        fov: activeConfig.cameraFov ?? 60
+      });
+    }
+
     console.log(`🎥 Camera transition to ${currentScene}:`, {
       position: cameraPosition,
       target: activeConfig.cameraTarget,
@@ -80,7 +135,7 @@ export const AFrameCabin = () => {
     const handleResize = () => {
       const activeConfig = sceneSequence.find((cfg) => cfg.key === currentScene);
       if (!activeConfig) return;
-      
+
       const cameraPosition = getAdjustedCameraPosition(activeConfig);
       targetCameraPos.current.set(...cameraPosition);
     };
@@ -98,48 +153,28 @@ export const AFrameCabin = () => {
     const easedProgress = easeInOutCubic(progress);
 
     // Smooth camera position lerp
-    const lerpFactor = Math.min(delta * 2, 1); // Smooth but responsive
-    camera.position.x = lerp(camera.position.x, targetCameraPos.current.x, lerpFactor);
-    camera.position.y = lerp(camera.position.y, targetCameraPos.current.y, lerpFactor);
-    camera.position.z = lerp(camera.position.z, targetCameraPos.current.z, lerpFactor);
+    // Removing the Math.min(..., 1) limit which was clamping on slower displays, causing a stutter
+    const lerpFactor = delta * 3; // Smooth base value 
+    camera.position.x = lerp(camera.position.x, posX, lerpFactor);
+    camera.position.y = lerp(camera.position.y, posY, lerpFactor);
+    camera.position.z = lerp(camera.position.z, posZ, lerpFactor);
 
     // Smooth camera lookAt
     const currentLookAt = new Vector3();
     camera.getWorldDirection(currentLookAt);
     currentLookAt.add(camera.position);
-    
-    currentLookAt.x = lerp(currentLookAt.x, targetCameraLookAt.current.x, lerpFactor);
-    currentLookAt.y = lerp(currentLookAt.y, targetCameraLookAt.current.y, lerpFactor);
-    currentLookAt.z = lerp(currentLookAt.z, targetCameraLookAt.current.z, lerpFactor);
-    
+
+    currentLookAt.x = lerp(currentLookAt.x, targetX, lerpFactor);
+    currentLookAt.y = lerp(currentLookAt.y, targetY, lerpFactor);
+    currentLookAt.z = lerp(currentLookAt.z, targetZ, lerpFactor);
+
     camera.lookAt(currentLookAt);
 
     // Smooth FOV transition
     if ('fov' in camera) {
-      (camera as any).fov = lerp((camera as any).fov, targetFov.current, lerpFactor * 0.5);
+      (camera as any).fov = lerp((camera as any).fov, fov, lerpFactor * 0.8);
       camera.updateProjectionMatrix();
     }
-
-    // Smooth model rotation
-    groupRef.current.rotation.x = lerp(
-      groupRef.current.rotation.x,
-      targetModelRotation.current.x,
-      lerpFactor * 0.8
-    );
-    groupRef.current.rotation.y = lerp(
-      groupRef.current.rotation.y,
-      targetModelRotation.current.y,
-      lerpFactor * 0.8
-    );
-    groupRef.current.rotation.z = lerp(
-      groupRef.current.rotation.z,
-      targetModelRotation.current.z,
-      lerpFactor * 0.8
-    );
-
-    // Subtle breathing animation
-    const breathe = 1 + Math.sin(Date.now() * 0.0005) * 0.01;
-    groupRef.current.scale.setScalar(breathe);
   });
 
   // Easing function
@@ -148,11 +183,11 @@ export const AFrameCabin = () => {
   };
 
   return (
-    <group ref={groupRef} position={[1, 0, 0]}>
+    <group ref={groupRef} position={[0, 0, 0]}>
       {cottageScene ? (
         <primitive
           object={cottageScene.clone()}
-          scale={0.8}
+          scale={1}
           position={[0, 0, 0]}
           castShadow
           receiveShadow
@@ -170,7 +205,7 @@ export const AFrameCabin = () => {
               envMapIntensity={0.2}
             />
           </mesh>
-          
+
           {/* Foundation texture detail */}
           {[-1.5, -0.5, 0.5, 1.5].map((x, i) => (
             <mesh key={`foundation-${i}`} position={[x, -0.1, 0]} castShadow>
@@ -178,7 +213,7 @@ export const AFrameCabin = () => {
               <meshStandardMaterial color="#4a4a4a" roughness={1} />
             </mesh>
           ))}
-          
+
           {/* Main house body - natural wood with realistic material */}
           <mesh position={[0, 1, 0]} castShadow receiveShadow>
             <boxGeometry args={[3.5, 2.2, 3]} />
@@ -189,7 +224,7 @@ export const AFrameCabin = () => {
               envMapIntensity={0.6}
             />
           </mesh>
-          
+
           {/* Side walls with wood texture */}
           <mesh position={[-1.76, 1, 0]} rotation={[0, Math.PI / 2, 0]} castShadow receiveShadow>
             <planeGeometry args={[3, 2.2, 4, 8]} />
@@ -209,7 +244,7 @@ export const AFrameCabin = () => {
               envMapIntensity={0.5}
             />
           </mesh>
-          
+
           {/* Back wall */}
           <mesh position={[0, 1, -1.52]} castShadow receiveShadow>
             <planeGeometry args={[3.5, 2.2, 8, 8]} />
@@ -220,7 +255,7 @@ export const AFrameCabin = () => {
               envMapIntensity={0.5}
             />
           </mesh>
-          
+
           {/* Front wall - detailed wood planks */}
           <mesh position={[0, 1, 1.52]} castShadow receiveShadow>
             <planeGeometry args={[3.5, 2.2, 8, 8]} />
@@ -231,7 +266,7 @@ export const AFrameCabin = () => {
               envMapIntensity={0.4}
             />
           </mesh>
-          
+
           {/* Realistic wood plank lines - more detail */}
           {[-1.4, -0.7, 0, 0.7, 1.4].map((x, i) => (
             <mesh key={`plank-${i}`} position={[x, 1, 1.53]} castShadow>
@@ -239,7 +274,7 @@ export const AFrameCabin = () => {
               <meshStandardMaterial color="#5a4332" roughness={0.98} />
             </mesh>
           ))}
-          
+
           {/* Horizontal wood grain lines */}
           {[0.3, 0.9, 1.5, 2.1].map((y, i) => (
             <mesh key={`grain-${i}`} position={[0, y, 1.53]} castShadow>
@@ -258,7 +293,7 @@ export const AFrameCabin = () => {
               envMapIntensity={0.4}
             />
           </mesh>
-          
+
           {/* Roof shingle detail - individual shingles */}
           {Array.from({ length: 6 }).map((_, i) => {
             const angle = (i / 6) * Math.PI * 2;
@@ -290,7 +325,7 @@ export const AFrameCabin = () => {
               envMapIntensity={0.3}
             />
           </mesh>
-          
+
           {/* Roof shingle texture lines */}
           <mesh position={[0, 2.25, 1.8]} rotation={[-Math.PI / 6, 0, 0]} castShadow>
             <boxGeometry args={[3.9, 0.02, 0.05]} />
@@ -304,14 +339,14 @@ export const AFrameCabin = () => {
           {/* Wooden door with realistic grain and shadow */}
           <mesh position={[0, 0.7, 1.52]} castShadow receiveShadow>
             <boxGeometry args={[0.7, 1.6, 0.08]} />
-            <meshStandardMaterial 
-              color="#5a3a21" 
+            <meshStandardMaterial
+              color="#5a3a21"
               roughness={0.88}
               metalness={0.02}
               envMapIntensity={0.4}
             />
           </mesh>
-          
+
           {/* Door panels detail */}
           <mesh position={[0, 0.9, 1.53]} castShadow>
             <boxGeometry args={[0.55, 0.55, 0.02]} />
@@ -321,22 +356,22 @@ export const AFrameCabin = () => {
             <boxGeometry args={[0.55, 0.55, 0.02]} />
             <meshStandardMaterial color="#4a2a11" roughness={0.92} />
           </mesh>
-          
+
           {/* Door frame with depth */}
           <mesh position={[0, 0.7, 1.545]} castShadow receiveShadow>
             <boxGeometry args={[0.88, 1.78, 0.06]} />
-            <meshStandardMaterial 
-              color="#3a2718" 
+            <meshStandardMaterial
+              color="#3a2718"
               roughness={0.95}
               metalness={0}
             />
           </mesh>
-          
+
           {/* Door handle */}
           <mesh position={[0.25, 0.7, 1.56]} castShadow>
             <sphereGeometry args={[0.03, 12, 12]} />
-            <meshStandardMaterial 
-              color="#8b7355" 
+            <meshStandardMaterial
+              color="#8b7355"
               roughness={0.4}
               metalness={0.6}
             />
@@ -345,7 +380,7 @@ export const AFrameCabin = () => {
           {/* Left window with ultra-realistic glass */}
           <mesh position={[-1, 1.3, 1.52]} receiveShadow>
             <planeGeometry args={[0.65, 0.65]} />
-            <meshPhysicalMaterial 
+            <meshPhysicalMaterial
               color="#b8d4e8"
               transmission={0.95}
               thickness={0.8}
@@ -358,18 +393,18 @@ export const AFrameCabin = () => {
               reflectivity={0.9}
             />
           </mesh>
-          
+
           {/* Window frame left with depth and shadow */}
           <mesh position={[-1, 1.3, 1.54]} castShadow receiveShadow>
             <boxGeometry args={[0.82, 0.82, 0.08]} />
-            <meshStandardMaterial 
-              color="#3a2718" 
+            <meshStandardMaterial
+              color="#3a2718"
               roughness={0.95}
               metalness={0}
               envMapIntensity={0.3}
             />
           </mesh>
-          
+
           {/* Window cross divider left */}
           <mesh position={[-1, 1.3, 1.55]} castShadow>
             <boxGeometry args={[0.65, 0.03, 0.02]} />
@@ -383,7 +418,7 @@ export const AFrameCabin = () => {
           {/* Right window with ultra-realistic glass */}
           <mesh position={[1, 1.3, 1.52]} receiveShadow>
             <planeGeometry args={[0.65, 0.65]} />
-            <meshPhysicalMaterial 
+            <meshPhysicalMaterial
               color="#b8d4e8"
               transmission={0.95}
               thickness={0.8}
@@ -396,18 +431,18 @@ export const AFrameCabin = () => {
               reflectivity={0.9}
             />
           </mesh>
-          
+
           {/* Window frame right with depth and shadow */}
           <mesh position={[1, 1.3, 1.54]} castShadow receiveShadow>
             <boxGeometry args={[0.82, 0.82, 0.08]} />
-            <meshStandardMaterial 
-              color="#3a2718" 
+            <meshStandardMaterial
+              color="#3a2718"
               roughness={0.95}
               metalness={0}
               envMapIntensity={0.3}
             />
           </mesh>
-          
+
           {/* Window cross divider right */}
           <mesh position={[1, 1.3, 1.55]} castShadow>
             <boxGeometry args={[0.65, 0.03, 0.02]} />
@@ -421,14 +456,14 @@ export const AFrameCabin = () => {
           {/* Chimney - realistic stone texture with detail */}
           <mesh position={[1.3, 3.2, 0]} castShadow receiveShadow>
             <boxGeometry args={[0.5, 1.4, 0.5]} />
-            <meshStandardMaterial 
-              color="#696969" 
+            <meshStandardMaterial
+              color="#696969"
               roughness={0.98}
               metalness={0}
               envMapIntensity={0.3}
             />
           </mesh>
-          
+
           {/* Chimney stone texture lines */}
           {[0.2, 0.5, 0.8, 1.1].map((y, i) => (
             <mesh key={`chimney-stone-${i}`} position={[1.3, 2.5 + y, 0]} castShadow>
@@ -436,12 +471,12 @@ export const AFrameCabin = () => {
               <meshStandardMaterial color="#5a5a5a" roughness={1} />
             </mesh>
           ))}
-          
+
           {/* Chimney top cap */}
           <mesh position={[1.3, 3.95, 0]} castShadow receiveShadow>
             <boxGeometry args={[0.6, 0.1, 0.6]} />
-            <meshStandardMaterial 
-              color="#7a7a7a" 
+            <meshStandardMaterial
+              color="#7a7a7a"
               roughness={0.9}
               metalness={0.1}
             />
@@ -480,7 +515,7 @@ export const AFrameCabin = () => {
           {/* Side window for work section view */}
           <mesh position={[1.76, 1.2, 0]} rotation={[0, Math.PI / 2, 0]}>
             <planeGeometry args={[1.2, 0.8]} />
-            <meshPhysicalMaterial 
+            <meshPhysicalMaterial
               color="#87CEEB"
               transmission={0.85}
               thickness={0.5}

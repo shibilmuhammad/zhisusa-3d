@@ -18,11 +18,11 @@ const ExperienceInner = () => {
   const dirLightRef = useRef<DirectionalLight>(null);
   const currentScene = useExperienceStore((state) => state.currentScene);
   const { gl } = useThree();
-  
+
   // Optimized THREE.js rendering settings
   useEffect(() => {
     gl.toneMapping = ACESFilmicToneMapping;
-    gl.toneMappingExposure = 1.2;
+    gl.toneMappingExposure = 0.9;
     gl.shadowMap.enabled = true;
     gl.shadowMap.type = PCFSoftShadowMap as ShadowMapType;
     // Use PCFSoft for better performance than PCF
@@ -34,13 +34,13 @@ const ExperienceInner = () => {
 
   // Show cabin model for "hero", "live", "work", "leisure", "booking", "gallery" and "footer" sections
   const showCabin = currentScene === "hero" || currentScene === "live" || currentScene === "work" || currentScene === "leisure" || currentScene === "booking" || currentScene === "gallery" || currentScene === "footer";
-  
+
   // Show reception desk for "hero" (small), "leisure" (small), and "booking" (normal, camera zooms)
   const showReceptionDesk = currentScene === "hero" || currentScene === "leisure" || currentScene === "booking";
-  
+
   // Show gallery display for "hero" (small) and "gallery" (normal, camera zooms)
   const showGallery = currentScene === "hero" || currentScene === "booking" || currentScene === "gallery";
-  
+
   // Show visit display for "hero" (small) and "footer" (normal, camera zooms)
   const showVisit = currentScene === "hero" || currentScene === "footer";
 
@@ -80,13 +80,13 @@ const ExperienceInner = () => {
 
       <group ref={groupRef}>
         {/* Optimized lighting - ONE main directional + ambient + hemisphere */}
-        <ambientLight intensity={1.2} color="#fff8f0" />
-        
+        <ambientLight intensity={1.5} color="#fff8f0" />
+
         {/* Main sunlight - OPTIMIZED shadow map size (1024 instead of 8192) */}
         <directionalLight
           ref={dirLightRef}
           position={[20, 25, 15]}
-          intensity={showCabin ? 3.5 : 2.2}
+          intensity={showCabin ? 4.5 : 2.5}
           castShadow
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
@@ -100,16 +100,9 @@ const ExperienceInner = () => {
           shadow-radius={2}
           color={showCabin ? "#ffe8d1" : "#ffffff"}
         />
-        
-        {/* Atmospheric hemisphere for natural outdoor lighting */}
-        <hemisphereLight
-  args={[
-    showCabin ? "#c8e6ff" : "#ffffff",
-    showCabin ? "#3d4f2f" : "#e8e8e8",
-    showCabin ? 1.2 : 0.8
-  ]}
-/>
 
+        {/* Atmospheric hemisphere for natural outdoor lighting */}
+        <hemisphereLight args={[showCabin ? "#c8e6ff" : "#ffffff", showCabin ? "#3d4f2f" : "#e8e8e8", showCabin ? 0.3 : 0.8]} />
 
         {/* Ultra-smooth fog for atmospheric depth */}
         <fog attach="fog" args={['#1a2a1f', 15, 45]} />
@@ -148,21 +141,21 @@ const ExperienceInner = () => {
             <MorphingElement />
           </Suspense>
         )}
-        
+
         {/* Reception Desk - visible in hero (small), leisure (small), and booking (zoomed) */}
         {showReceptionDesk && (
           <Suspense fallback={null}>
             <ReceptionDesk />
           </Suspense>
         )}
-        
+
         {/* Gallery Display - visible in hero (small), booking (small), and gallery (zoomed) */}
         {showGallery && (
           <Suspense fallback={null}>
             <GalleryDisplay />
           </Suspense>
         )}
-        
+
         {/* Visit Display - visible in hero (small) and footer (zoomed) */}
         {showVisit && (
           <Suspense fallback={null}>
