@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <pre id="output">Loading...</pre>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.150.0/build/three.module.js",
+        "@splinetool/loader": "https://unpkg.com/@splinetool/loader@1.0.86/build/SplineLoader.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import SplineLoader from '@splinetool/loader';
+
+    console.log("THREE", THREE.REVISION);
+    const loader = new SplineLoader('https://unpkg.com/@splinetool/loader@1.0.86/build/SplineLoader.js');
+    loader.load('https://prod.spline.design/jlu-LrL7kOx-S9uS/scene.splinecode', (splineScene) => {
+      console.log('Loaded scene', splineScene);
+      const msgs = [];
+      splineScene.traverse((obj) => {
+        if (obj.name) {
+          msgs.push(`- ${obj.name} (${obj.type}) [uuid: ${obj.uuid}]`);
+        }
+      });
+      document.getElementById('output').textContent = msgs.join('\n');
+    }, undefined, (error) => {
+      console.error(error);
+      document.getElementById('output').textContent = "ERROR: " + error;
+    });
+  </script>
+</body>
+</html>
