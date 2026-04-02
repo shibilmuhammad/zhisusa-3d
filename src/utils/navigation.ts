@@ -1,10 +1,9 @@
-import { SceneKey } from "@/animations/constants";
 
 /**
  * Scrolls to a specific section by its scene key
  * Centers the section in the viewport
  */
-export function scrollToSection(sceneKey: SceneKey): void {
+export function scrollToSection(sceneKey: string): void {
   console.log("🔍 Navigation: Attempting to scroll to", sceneKey);
   
   // On mobile, use the section element with id
